@@ -1,0 +1,2 @@
+# GiM
+Grafika i Multimedia
