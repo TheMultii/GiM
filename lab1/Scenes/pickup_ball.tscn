@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bp3rvp3y1h3sd"]
+
+[ext_resource type="Material" uid="uid://bcn8dvv1qfkvd" path="res://Materials/ball_pickup_material.tres" id="1_kases"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_e87pg"]
+material = ExtResource("1_kases")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4vopr"]
+
+[node name="PickupBall" type="StaticBody3D" groups=["PickupBall"]]
+collision_layer = 2
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_e87pg")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_4vopr")
