@@ -24,4 +24,3 @@ func _ready() -> void:
 		var clone := ball.instantiate()
 		clone.position = Vector3(rnd1, 0.63, rnd2)
 		pickups.add_child(clone)
-

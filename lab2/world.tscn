@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=3 uid="uid://cf3ojxl0y5hct"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_jvt27"]
+[ext_resource type="PackedScene" uid="uid://domhm87hbhbg1" path="res://Player.tscn" id="2_jmamw"]
+[ext_resource type="Terrain3DStorage" uid="uid://lalq1xnmbjdl" path="res://data/terrain_storage.res" id="3_tvmdg"]
+[ext_resource type="Terrain3DMaterial" uid="uid://mdbiw4ol0dtx" path="res://data/Demo.tres" id="4_a3j33"]
+[ext_resource type="Terrain3DTextureList" uid="uid://sdu5jduakksf" path="res://data/texture_list.tres" id="5_pqbe4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1hh08"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_12atq"]
+sky_material = SubResource("ProceduralSkyMaterial_1hh08")
+
+[sub_resource type="Environment" id="Environment_81ef0"]
+background_mode = 2
+sky = SubResource("Sky_12atq")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_peedi"]
+albedo_color = Color(0.670588, 0.611765, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5xku7"]
+material = SubResource("StandardMaterial3D_peedi")
+size = Vector2(100, 100)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2bnuw"]
+points = PackedVector3Array(50.7837, 0.793495, 50.7837, -50.7837, -0.793495, -50.7837, -50.7837, 0.793495, -50.7837, 50.7837, -0.793495, -50.7837, -50.7837, -0.793495, 50.7837, -50.7837, 0.793495, 50.7837, 50.7837, 0.793495, -50.7837, 50.7837, -0.793495, 50.7837)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_jvt27")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_81ef0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_jmamw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 30.2216)
+first_person = true
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00448227, 4.76837e-07, -0.0384583)
+visible = false
+mesh = SubResource("PlaneMesh_5xku7")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00448227, 4.76837e-07, -0.0384583)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_2bnuw")
+
+[node name="Terrain3D" type="Terrain3D" parent="."]
+storage = ExtResource("3_tvmdg")
+material = ExtResource("4_a3j33")
+texture_list = ExtResource("5_pqbe4")
+collision_layer = 3
+collision_mask = 3
